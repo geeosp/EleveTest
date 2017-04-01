@@ -1,17 +1,37 @@
-package com.example.geeo.elevetest;
+package com.example.geeo.elevetest.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by geeo on 01/04/17.
  */
 
-public class Comment {
 
 
-    int  id, postId;
-    String name, email, body;
+
+public class Comment extends RealmObject {
+
+
+
+    @PrimaryKey
+    private long   id;
+    private long postId;
+    private String name, email, body;
+
+
+    public Comment(){
+
+        this.name = "";
+        this.email = "";
+        this.name = "";
+        this. body = "";
+        this.postId = -1;
+        this.id = -1;
+    }
 
     public Comment(int id, int postId, String name, String email, String body) {
         this.id = id;
@@ -24,7 +44,8 @@ public class Comment {
     public Comment (JSONObject json){
 
 
-        try {
+        try
+        {
             this.id = json.getInt("id");
         this.postId = json.getInt("postId");
         this.name = json.getString("name");
@@ -51,7 +72,7 @@ public class Comment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-return json;
+        return json;
 
 
     }
@@ -82,19 +103,19 @@ return json;
         this.body = body;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getPostId() {
+    public long getPostId() {
         return postId;
     }
 
-    public void setPostId(int postId) {
+    public void setPostId(long postId) {
         this.postId = postId;
     }
 }

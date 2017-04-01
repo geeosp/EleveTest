@@ -1,35 +1,97 @@
 package com.example.geeo.elevetest;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
-import static android.R.attr.id;
+import com.example.geeo.elevetest.models.Comment;
+
+import java.util.Iterator;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by geeo on 01/04/17.
  */
 
-public class DBManager extends SQLiteOpenHelper {
+public class DBManager {
+    private static Context ctx;
 
 
-    public static final String TABLE_NAME  = "COMMENTS";
+    private  static DBManager instance;
 
 
+    public static DBManager getInstance(Context context) {
+        //super(context, TABLE_NAME, null, 0);
+        if (instance == null) {
+            instance = new DBManager();
+            Realm.init(context);
+
+        }
+        ctx = context;
+        return instance;
 
 
-    public DBManager (Context context){
-        super(context, TABLE_NAME, null, 0);
     }
 
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void saveComments(List<Comment> comments) {
+        Iterator<Comment> it = comments.iterator();
+        Realm.getDefaultInstance().beginTransaction();
+        while (it.hasNext()) {
+            Comment c = it.next();
+            instance.saveCommentWithoutTransaction(c);
+
+        }
+        Realm.getDefaultInstance().commitTransaction();
+
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void deleteComment(long CommentId) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        RealmResults<Comment> result = realm.where(Comment.class).equalTo("id", CommentId).findAll();
+        result.deleteAllFromRealm();
+        realm.commitTransaction();
+    }
+
+    public void deleteAll() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        RealmResults<Comment> result = realm.where(Comment.class).findAll();
+        result.deleteAllFromRealm();
+        realm.commitTransaction();
+    }
+
+
+    public List<Comment> loadComments() {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmResults<Comment> Comments = realm.where(Comment.class).findAll();
+        return Comments;
+    }
+
+
+    public Comment getComment(long id) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Comment> Comment = realm.where(Comment.class).equalTo("id", id).findAll();
+        return realm.copyFromRealm(Comment.first());
 
     }
+
+
+    public void saveComment(Comment comment) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        saveCommentWithoutTransaction(comment);
+        realm.commitTransaction();
+    }
+     void saveCommentWithoutTransaction(Comment Comment) {
+        Realm realm = Realm.getDefaultInstance();
+       // realm.beginTransaction();
+        realm.insertOrUpdate(Comment);
+        //realm.commitTransaction();
+    }
+
+
+
 }
