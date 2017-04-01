@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">EleveTest</string>
+    <string name="main_server">https://jsonplaceholder.typicode.com/comments</string>
 
     <string name="go">Go</string>
+    <string name="id_request">ID</string>
+    <string name="oops">Oops</string>
+    <string name="something_went_wrong">Algo deu errado</string>
+    <string name="something_went_wrong_hint">O servidor não respondeu:/\nVerifique se estamos conectados e tente outra vez:)</string>
+    <string name="ok">OK</string>
 </resources>
