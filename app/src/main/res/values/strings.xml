@@ -9,4 +9,6 @@
     <string name="something_went_wrong_hint">O servidor não respondeu:/\nVerifique se estamos conectados e tente outra vez:)</string>
     <string name="ok">OK</string>
     <string name="title_activity_comment">CommentActivity</string>
+    <string name="comment_id">Id: </string>
+
 </resources>

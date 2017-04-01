@@ -121,12 +121,14 @@ db.deleteAll();db.saveComments(comments);
     }
     class CommentListHolder extends RecyclerView.ViewHolder {
         TextView tv_comment_name;
+        TextView tv_comment_email;
         View view;
 
         public CommentListHolder(View itemView) {
             super(itemView);
             this.view = itemView;
             this.tv_comment_name = (TextView) itemView.findViewById(R.id.tv_comment_name);
+            this.tv_comment_email = (TextView) itemView.findViewById(R.id.tv_comment_email);
         }
     }
 
@@ -145,6 +147,7 @@ db.deleteAll();db.saveComments(comments);
         public void onBindViewHolder(CommentListHolder holder, final int position) {
             final Comment comment = comments.get(position);
             holder.tv_comment_name.setText(comment.getName());
+            holder.tv_comment_email.setText(comment.getEmail());
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
