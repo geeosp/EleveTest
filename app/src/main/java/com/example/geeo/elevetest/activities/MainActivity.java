@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+            mRequestQueue = Volley.newRequestQueue(MainActivity.this);
         }
         return mRequestQueue;
     }
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CommentListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.comment_list_item, parent, false);
+            View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.comment_list_item, parent, false);
             CommentListHolder holder = new CommentListHolder(view);
             return holder;
         }
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), CommentActivity.class);
+                    Intent intent = new Intent(MainActivity.this, CommentActivity.class);
                     intent.putExtra("id", comment.getId());
                     startActivity(intent);
                 }
