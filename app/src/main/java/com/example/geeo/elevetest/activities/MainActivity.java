@@ -79,13 +79,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void requestPost(View v) {
-        final AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
         final String id = et_postId.getText().toString();
-        params.put("postId", id);
         String server = getResources().getString(R.string.main_server);
         progressBar.setIndeterminate(true);
-/*
+   /*
+        final AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+     params.put("postId", id);
+
         client.get(server, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -158,16 +159,19 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        StringRequest jsObjRequest = new StringRequest(Request.Method.GET, server, new Response.Listener<String>() {
+
+        String request = server + "?postId="+id;
+
+        StringRequest jsObjRequest = new StringRequest(Request.Method.GET, request, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
-                Log.e("Eleve", response);
+            public void onResponse(String responseString) {
+                Log.e("Eleve", responseString);
                 try {
-                    final JSONArray jsonArray = new JSONArray(response);
+                    final JSONArray jsonArray = new JSONArray(responseString);
 
                     progressBar.setIndeterminate(false);
                     comments = new ArrayList<Comment>();
-                    for (int c = 0; c < response.length(); c++) {
+                    for (int c = 0; c < jsonArray.length(); c++) {
 
                         comments.add(new Comment((JSONObject) jsonArray.get(c)));
 
@@ -179,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 DBManager db = DBManager.getInstance(MainActivity.this);
                 db.deleteAll();
                 db.saveComments(comments);
+
                 updatViews();
 
             }
@@ -204,16 +209,8 @@ public class MainActivity extends AppCompatActivity {
                 alert.show();
 
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("postId", id);
-                return params;
+        }) ;
 
-
-            }
-        };
 
         getRequestQueue().add(jsObjRequest);
 
@@ -233,6 +230,31 @@ public class MainActivity extends AppCompatActivity {
         commentsAdaptar = new CommentAdapter();
         rvComments.setAdapter(commentsAdaptar);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     class CommentListHolder extends RecyclerView.ViewHolder {
         TextView tv_comment_name;
