@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
 
     android:background="#eeeeee"
+    android:focusable="false"
+    android:focusableInTouchMode="true"
     tools:context="com.example.geeo.elevetest.activities.MainActivity">
 
 
@@ -17,7 +19,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:onClick="requestPost"
-        android:text="Button"
+        android:text="@android:string/search_go"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,8 +34,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/id_request"
-        android:inputType="number"
-        android:text="1"
+        android:inputType="phone"
+      android:maxLines="1"
+        android:imeOptions="actionDone"
+
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/button4"
         app:layout_constraintTop_toTopOf="parent" />

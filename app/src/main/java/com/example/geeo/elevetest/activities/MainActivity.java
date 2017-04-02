@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         ;
         commentsRvLayout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvComments.setLayoutManager(commentsRvLayout);
+
+
         Log.d("eleve", ""+comments.size());
     }
 
